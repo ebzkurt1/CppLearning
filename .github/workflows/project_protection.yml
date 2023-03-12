@@ -1,7 +1,0 @@
-
-name: Project main branch protection
-
-on:
-  pull_requests:
-  push:
-    branches: main
