@@ -5,6 +5,46 @@
 #include <cmath>
 
 
+
+int life_support_rating(std::string file_name){
+    std::ifstream input(file_name);
+    std::string line;
+    int one_occurance[12] = {};
+    int zero_occurance[12] = {};
+    string input_list[1000000];
+    int input_legth = 0;
+    
+    while(std::getline(input, line)){
+        input_list[input_legth] = line;
+        for (int i = 0; i < line.length(); i++){
+            if (line[i] == '0'){
+                one_occurance[i] += 1;
+            }
+            else if (line[i] == '1'){
+                zero_occurance[i] += 1;
+            }
+        }
+        input_legth++;
+    }
+    for (int i = 0; i < sizeof(one_occurance) / sizeof(int); i++){
+        if (one_occurance[i] > zero_occurance[i]){
+            for (int j = 0; j < input_legth; j++){
+                if (input_list[j][i] == '1'){
+                    new_list.push_back(input_list[j]);
+                }
+            }
+        }
+        else{
+            for (int j = 0; j < input_legth; j++){
+                if (input_list[j][i] == '0'){
+                    new_list.push_back(input_list[j]);
+                }
+            }
+        }
+    }
+
+}
+
 int power_consuption_calculation(std::string file_name){
     std::ifstream input(file_name);
     std::string line;
