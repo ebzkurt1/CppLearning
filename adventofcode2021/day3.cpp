@@ -11,7 +11,7 @@ int life_support_rating(std::string file_name){
     std::string line;
     int one_occurance[12] = {};
     int zero_occurance[12] = {};
-    string input_list[1000000];
+    std::string input_list[10000000];
     int input_legth = 0;
     
     while(std::getline(input, line)){
@@ -26,22 +26,17 @@ int life_support_rating(std::string file_name){
         }
         input_legth++;
     }
+    std::vector<std::string> occurance_indexes;
     for (int i = 0; i < sizeof(one_occurance) / sizeof(int); i++){
         if (one_occurance[i] > zero_occurance[i]){
             for (int j = 0; j < input_legth; j++){
                 if (input_list[j][i] == '1'){
-                    new_list.push_back(input_list[j]);
-                }
-            }
-        }
-        else{
-            for (int j = 0; j < input_legth; j++){
-                if (input_list[j][i] == '0'){
-                    new_list.push_back(input_list[j]);
+                    occurance_indexes.push_back(input_list[j]);
                 }
             }
         }
     }
+    return 0;
 
 }
 
@@ -87,6 +82,6 @@ int power_consuption_calculation(std::string file_name){
 
 int main ()
 {
-    std::cout << power_consuption_calculation("day3_input_emre.txt") << std::endl;
+    std::cout << life_support_rating("day3_input_emre.txt") << std::endl;
     return 0;
 }
