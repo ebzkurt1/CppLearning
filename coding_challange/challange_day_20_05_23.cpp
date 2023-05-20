@@ -29,10 +29,14 @@ int main(int argc, char* argv[])
         bool is_first_line = true;
         while(std::getline(inFile, line))
         {
-            if(is_first_line || line != pre)
+            if(is_first_line)
             {
-                std::cout << line << "\n";
+                std::cout << line;
                 is_first_line = false;
+            }
+            else if(line != pre)
+            {
+                std::cout << '\n' << line;
             }
             pre = line;
         }
