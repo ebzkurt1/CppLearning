@@ -13,35 +13,85 @@ int main(int argc, char* argv[])
 {
     // read input file line by line
 
-    for (int i = 1; i < argc; i++)
+    std::string arg1 = argv[1];
+    if (arg1 == "-")
     {
-        std::string filename = argv[i];
-        std::ifstream inFile(filename);
-
-        if (!inFile)
+        // if an output file is specified, write to it
+        // else read from standard input
+        if (argc >= 3)
         {
-            std::cout << "Error opening file: " << filename << "\n";
-            return 1;
+            std::string filename = argv[2];
+            std::ofstream out_file(filename);
+            std::string line;
+            std::string pre;  // previous line
+            bool is_first_line = true;
+            while(std::getline(std::cin, line))
+            {
+                if(is_first_line)
+                {
+                    out_file << line;
+                    is_first_line = false;
+                }
+                else if(line != pre)
+                {
+                    out_file << '\n' << line;
+                }
+                pre = line;
+            }
+            out_file.close();
         }
-
-        std::string line;
-        std::string pre;  // previous line 
-        bool is_first_line = true;
-        while(std::getline(inFile, line))
+        else
         {
-            if(is_first_line)
+            std::string line;
+            std::string pre;  // previous line
+            bool is_first_line = true;
+            while(std::getline(std::cin, line))
             {
-                std::cout << line;
-                is_first_line = false;
+                if(is_first_line)
+                {
+                    std::cout << line;
+                    is_first_line = false;
+                }
+                else if(line != pre)
+                {
+                    std::cout << '\n' << line;
+                }
+                pre = line;
             }
-            else if(line != pre)
-            {
-                std::cout << '\n' << line;
-            }
-            pre = line;
         }
-        inFile.close();
+    }
+    else
+    {
+        for (int i = 1; i < argc; i++)
+        {
+            std::string filename = argv[i];
+            std::ifstream inFile(filename);
 
+            if (!inFile)
+            {
+                std::cout << "Error opening file: " << filename << "\n";
+                return 1;
+            }
+
+            std::string line;
+            std::string pre;  // previous line 
+            bool is_first_line = true;
+            while(std::getline(inFile, line))
+            {
+                if(is_first_line)
+                {
+                    std::cout << line;
+                    is_first_line = false;
+                }
+                else if(line != pre)
+                {
+                    std::cout << '\n' << line;
+                }
+                pre = line;
+            }
+            inFile.close();
+
+        }
     }
     return 0;
 }
