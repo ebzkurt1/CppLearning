@@ -60,6 +60,44 @@ int main(int argc, char* argv[])
             }
         }
     }
+    else if (arg1 == "-c")
+    {
+        if (argc >= 3)
+        {
+            std::string filename = argv[2];
+            std::ifstream inFile(filename);
+
+            if (!inFile)
+            {
+                std::cout << "Error opening file: " << filename << "\n";
+                return 1;
+            }
+
+            std::string line;
+            std::string pre;  // previous line 
+            int count = 1;
+            bool is_first_line = true;
+            while(std::getline(inFile, line))
+            {
+                if(is_first_line)
+                {
+                    is_first_line = false;
+                }
+                else if(line != pre)
+                {
+                    std::cout << '\n' << count << " " << pre;
+                    count = 1;
+                }
+                else
+                {
+                    count++;
+                }
+                pre = line;
+            }
+            std::cout << '\n' << count << " " << pre;
+            inFile.close();
+        }
+    }
     else
     {
         for (int i = 1; i < argc; i++)
