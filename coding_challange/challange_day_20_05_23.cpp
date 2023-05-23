@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <map>
 
 
 int main(int argc, char* argv[])
@@ -132,6 +133,38 @@ int main(int argc, char* argv[])
                     written_before = false;
                 }
                 pre = line;
+            }
+        }
+    }
+
+    else if (arg1 == "-u")
+    {
+        if (argc >= 3)
+        {
+            std::string filename = argv[2];
+            std::ifstream inFile(filename);
+
+            if (!inFile)
+            {
+                std::cout << "Error opening file: " << filename << "\n";
+                return 1;
+            }
+
+            std::map<std::string, int> input_lines;
+            std::string line;
+            
+            while(std::getline(inFile, line))
+            {
+                ++input_lines[line];
+            }
+            inFile.close();
+
+            for (const auto& pair : input_lines)
+            {
+                if(pair.second == 1)
+                {
+                    std::cout << pair.first << '\n';
+                }
             }
         }
     }
