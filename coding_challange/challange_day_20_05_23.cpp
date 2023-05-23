@@ -98,6 +98,44 @@ int main(int argc, char* argv[])
             inFile.close();
         }
     }
+
+    else if (arg1 == "-d")
+    {
+        if (argc >= 3)
+        {
+            std::string filename = argv[2];
+            std::ifstream inFile(filename);
+
+            if (!inFile)
+            {
+                std::cout << "Error opening file: " << filename << "\n";
+                return 1;
+            }
+
+            std::string line;
+            std::string pre;  // previous line
+            bool written_before = false;
+            bool is_first_line = true;
+            while(std::getline(inFile, line))
+            {
+                if(is_first_line)
+                {
+                    is_first_line = false;
+                }
+                else if(line == pre)
+                {
+                    std::cout << '\n' << line;
+                    written_before = true;
+                }
+                else
+                {
+                    written_before = false;
+                }
+                pre = line;
+            }
+        }
+    }
+
     else
     {
         for (int i = 1; i < argc; i++)
