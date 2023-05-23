@@ -7,12 +7,68 @@
 #include <map>
 
 
+void read_standard_input(std::string filename, bool write_to_output = false, std::string output_filename = "")
+{
+    if (write_to_output)
+    {
+        std::ofstream out_file(output_filename);
+        std::string line;
+        std::string pre;  // previous line
+        bool is_first_line = true;
+        while(std::getline(std::cin, line))
+        {
+            if(is_first_line)
+            {
+                out_file << line;
+                is_first_line = false;
+            }
+            else if(line != pre)
+            {
+                out_file << '\n' << line;
+            }
+            pre = line;
+        }
+        out_file.close();
+    }
+    else
+    {
+        std::string line;
+        std::string pre;  // previous line
+        bool is_first_line = true;
+        while(std::getline(std::cin, line))
+        {
+            if(is_first_line)
+            {
+                std::cout << line;
+                is_first_line = false;
+            }
+            else if(line != pre)
+            {
+                std::cout << '\n' << line;
+            }
+            pre = line;
+        }
+    }
+}
+
+
 int main(int argc, char* argv[])
     // argc - number of arguments represents number of command line arguments passed to the program
     // char* argv[] - This parameter is an array of strings (char*) representing the command-line arguments.
     // argv stands for "argument vector." 
 {
     // read input file line by line
+
+    for (int i = 1; i < argc; i++)
+    {
+        std::cout << argv[i] << "\n";
+        if (argv[i] == "-")
+        {
+            if (argc >= 3)
+            {
+            }
+        }
+    }
 
     std::string arg1 = argv[1];
     if (arg1 == "-")
@@ -26,40 +82,6 @@ int main(int argc, char* argv[])
             std::string line;
             std::string pre;  // previous line
             bool is_first_line = true;
-            while(std::getline(std::cin, line))
-            {
-                if(is_first_line)
-                {
-                    out_file << line;
-                    is_first_line = false;
-                }
-                else if(line != pre)
-                {
-                    out_file << '\n' << line;
-                }
-                pre = line;
-            }
-            out_file.close();
-        }
-        else
-        {
-            std::string line;
-            std::string pre;  // previous line
-            bool is_first_line = true;
-            while(std::getline(std::cin, line))
-            {
-                if(is_first_line)
-                {
-                    std::cout << line;
-                    is_first_line = false;
-                }
-                else if(line != pre)
-                {
-                    std::cout << '\n' << line;
-                }
-                pre = line;
-            }
-        }
     }
     else if (arg1 == "-c")
     {
